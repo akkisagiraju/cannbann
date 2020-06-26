@@ -28,8 +28,8 @@ authRouter.post('/signin', async (request, response) => {
   const isPasswordCorret =
     user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
-  if (!user || !isPasswordCorret) {
-    response.status(401).json({ error: 'Invalid username or password' });
+  if (!isPasswordCorret) {
+    response.status(401).json({ error: 'Invalid email or password' });
   } else {
     const tokenObject = {
       email: user.email,
