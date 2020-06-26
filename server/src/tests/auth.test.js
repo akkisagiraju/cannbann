@@ -24,6 +24,21 @@ beforeEach(async () => {
   await user.save();
 });
 
+test('Token is returned after a user logs in successfully', async () => {
+  const userToBeLoggedIn = {
+    email: 'test@test.com',
+    password: 'hssshsecret'
+  };
+
+  const response = await api
+    .post('/auth/signin')
+    .send(userToBeLoggedIn)
+    .expect(200)
+    .expect('Content-Type', /application\/json/);
+
+  expect(response.body.token).toBeDefined();
+});
+
 test('User creation is successful with a new user', async () => {
   const usersAtStart = await usersInDb();
 
@@ -34,7 +49,7 @@ test('User creation is successful with a new user', async () => {
   };
 
   await api
-    .post('/api/signup')
+    .post('/auth/signup')
     .send(newUser)
     .expect(200)
     .expect('Content-Type', /application\/json/);
@@ -46,6 +61,6 @@ test('User creation is successful with a new user', async () => {
   expect(users).toContain(newUser.name);
 });
 
-afterAll(async () => {
-  await mongoose.connection.close();
+afterAll(() => {
+  mongoose.connection.close();
 });
