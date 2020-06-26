@@ -29,17 +29,18 @@ authRouter.post('/signin', async (request, response) => {
     user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
   if (!isPasswordCorret) {
-    response.status(401).json({ error: 'Invalid email or password' });
-  } else {
-    const tokenObject = {
-      email: user.email,
-      id: user._id
-    };
-
-    const token = jwt.sign(tokenObject, process.env.SECRET_KEY);
-
-    response.status(200).send({ token, name: user.name, email: user.email });
+    return response.status(401).json({ error: 'Invalid email or password' });
   }
+  const tokenObject = {
+    email: user.email,
+    id: user._id
+  };
+
+  const token = jwt.sign(tokenObject, process.env.SECRET_KEY);
+
+  return response
+    .status(200)
+    .send({ token, name: user.name, email: user.email });
 });
 
 module.exports = authRouter;
