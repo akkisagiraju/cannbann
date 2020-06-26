@@ -15,15 +15,12 @@ const tokenExtractor = (request, response, next) => {
     authorization = authorization.substring(7);
     const isTokenValid = jwt.verify(authorization, process.env.SECRET_KEY);
     if (!isTokenValid) {
-      response.status(401).send({ error: 'Invalid token' });
-    } else {
-      // this attaches token to the request object
-      request.token = authorization;
-      next();
+      return response.status(401).send({ error: 'Invalid token' });
     }
-  } else {
-    response.status(401).send({ error: 'Token is not supplied' });
+    request.token = authorization;
+    next();
   }
+  return response.status(401).send({ error: 'Token is not supplied' });
 };
 
 const errorHandler = (error, request, response, next) => {
