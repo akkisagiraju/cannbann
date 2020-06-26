@@ -17,4 +17,4 @@
 - [x] Add sign up
 - [x] Add sign in
 - [x] Add jwt token for authentication
-- [ ] Write tests for these flows
+- [x] Write tests for Signin and Signup
