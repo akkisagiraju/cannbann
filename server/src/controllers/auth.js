@@ -30,16 +30,16 @@ authRouter.post('/signin', async (request, response) => {
 
   if (!user || !isPasswordCorret) {
     response.status(401).json({ error: 'Invalid username or password' });
+  } else {
+    const tokenObject = {
+      email: user.email,
+      id: user._id
+    };
+
+    const token = jwt.sign(tokenObject, process.env.SECRET_KEY);
+
+    response.status(200).send({ token, name: user.name, email: user.email });
   }
-
-  const tokenObject = {
-    email: user.email,
-    id: user._id
-  };
-
-  const token = jwt.sign(tokenObject, process.env.SECRET_KEY);
-
-  response.status(200).send({ token, name: user.name, email: user.email });
 });
 
 module.exports = authRouter;
