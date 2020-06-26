@@ -14,5 +14,7 @@
 
 - [x] Setup Eslint
 - [x] Setup Jest
-- [ ] Create an express server to sign up and sign in
-- [ ] Add jwt for authentication
+- [x] Add sign up
+- [x] Add sign in
+- [x] Add jwt token for authentication
+- [ ] Write tests for these flows
