@@ -8,18 +8,23 @@ const requestLogger = (request, response, next) => {
   next();
 };
 
+const isAuthTokenNonEmpty = (auth) =>
+  auth && auth.toLowerCase().startsWith('bearer ');
+
+const isAuthTokenValid = (auth) => jwt.verify(auth, process.env.SECRET_KEY);
+
 const tokenExtractor = (request, response, next) => {
   let authorization = request.get('authorization');
 
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+  if (isAuthTokenNonEmpty(authorization)) {
     authorization = authorization.substring(7);
-    const isTokenValid = jwt.verify(authorization, process.env.SECRET_KEY);
-    if (!isTokenValid) {
+    if (!isAuthTokenValid(authorization)) {
       return response.status(401).send({ error: 'Invalid token' });
     }
     request.token = authorization;
     next();
   }
+
   return response.status(401).send({ error: 'Token is not supplied' });
 };
 
