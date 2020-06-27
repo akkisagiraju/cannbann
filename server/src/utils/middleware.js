@@ -28,16 +28,33 @@ const tokenExtractor = (request, response, next) => {
   return response.status(401).send({ error: 'Token is not supplied' });
 };
 
+const getErrorMessage = (error) => {
+  switch (error.name) {
+    case 'CastError':
+      return 'Malformatted ID';
+    case 'ValidationError':
+      return error.message;
+    case 'JsonWebTokenError':
+      return 'Invalid token';
+    default:
+      return 'Error occurred';
+  }
+};
+
+const getErrorCode = (error) => {
+  if (error.name === 'JsonWebTokenError') {
+    return 401;
+  }
+  return 400;
+};
+
 const errorHandler = (error, request, response, next) => {
   logger.error(error.message);
 
-  if (error.name === 'CastError') {
-    response.send(400).send({ error: 'Malformatted ID' });
-  } else if (error.name === 'ValidationError') {
-    response.send(400).send({ error: error.message });
-  } else if (error.name === 'JsonWebTokenError') {
-    response.send(401).send({ error: 'Invalid token' });
-  }
+  const errorCode = getErrorCode(error);
+  const errorMessage = getErrorMessage(error);
+
+  response.send(errorCode).send({ error: errorMessage });
 
   next(error);
 };
