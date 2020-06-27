@@ -2,6 +2,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const isAuthTokenNonEmpty = (auth) =>
+  auth && auth.toLowerCase().startsWith('bearer ');
+
+const isAuthTokenValid = (token) => jwt.verify(token, process.env.SECRET_KEY);
+
 const getErrorMessage = (error) => {
   switch (error.name) {
     case 'CastError':
@@ -38,6 +43,8 @@ const generateUserToken = (user) => {
 };
 
 module.exports = {
+  isAuthTokenNonEmpty,
+  isAuthTokenValid,
   getErrorMessage,
   getErrorCode,
   generatePasswordHash,
