@@ -1,9 +1,9 @@
 /* eslint-disable node/no-unpublished-require */
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
 const supertest = require('supertest');
 const app = require('../app');
 const User = require('../models/User');
+const { generatePasswordHash } = require('../utils/helper');
 
 const api = supertest(app);
 
@@ -14,13 +14,8 @@ const usersInDb = async () => {
 
 beforeEach(async () => {
   await User.deleteMany({});
-
-  const SALT_ROUNDS = 10;
-  const TEST_PASSWORD = 'hssshsecret';
-
-  const passwordHash = await bcrypt.hash(TEST_PASSWORD, SALT_ROUNDS);
+  const passwordHash = await generatePasswordHash('hssshsecret');
   const user = new User({ name: 'root', email: 'test@test.com', passwordHash });
-
   await user.save();
 });
 
