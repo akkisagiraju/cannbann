@@ -12,17 +12,17 @@ const requestLogger = (request, response, next) => {
 const isAuthTokenNonEmpty = (auth) =>
   auth && auth.toLowerCase().startsWith('bearer ');
 
-const isAuthTokenValid = (auth) => jwt.verify(auth, process.env.SECRET_KEY);
+const isAuthTokenValid = (token) => jwt.verify(token, process.env.SECRET_KEY);
 
 const tokenExtractor = (request, response, next) => {
-  let authorization = request.get('authorization');
+  const authorization = request.get('authorization');
 
   if (isAuthTokenNonEmpty(authorization)) {
-    authorization = authorization.substring(7);
-    if (!isAuthTokenValid(authorization)) {
+    const token = authorization.substring(7);
+    if (!isAuthTokenValid(token)) {
       return response.status(401).send({ error: 'Invalid token' });
     }
-    request.token = authorization;
+    request.token = token;
     next();
   }
 
