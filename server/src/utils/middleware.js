@@ -54,7 +54,7 @@ const errorHandler = (error, request, response, next) => {
   const errorCode = getErrorCode(error);
   const errorMessage = getErrorMessage(error);
 
-  response.send(errorCode).send({ error: errorMessage });
+  response.status(errorCode).send({ error: errorMessage });
 
   next(error);
 };
