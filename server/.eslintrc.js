@@ -5,10 +5,12 @@ module.exports = {
     node: true,
     jest: true
   },
+  plugins: ['prettier'],
   extends: [
     'airbnb-base',
     'plugin:node/recommended',
-    'plugin:security/recommended'
+    'plugin:security/recommended',
+    'prettier'
   ],
   globals: {
     Atomics: 'readonly',
@@ -28,7 +30,6 @@ module.exports = {
     'node/prefer-promises/dns': 'error',
     'node/prefer-promises/fs': 'error',
     'comma-dangle': 0,
-    'implicit-arrow-linebreak': 0,
     'no-console': 0,
     'no-unused-vars': [
       1,

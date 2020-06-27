@@ -23,11 +23,14 @@
   "devDependencies": {
     "eslint": "^7.3.1",
     "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-security": "^1.4.0",
     "jest": "^26.1.0",
     "nodemon": "^2.0.4",
+    "prettier": "^2.0.5",
     "supertest": "^4.0.2"
   }
 }
