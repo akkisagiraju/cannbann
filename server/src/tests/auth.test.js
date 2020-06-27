@@ -61,6 +61,22 @@ test('User creation is successful with a new user', async () => {
   expect(users).toContain(newUser.name);
 });
 
+test('Sign up fails if password is less than 3 characters', async () => {
+  const invalidUser = {
+    name: 'Akhil',
+    email: 'ak@me.com',
+    password: '12'
+  };
+
+  const response = await api
+    .post('/auth/signup')
+    .send(invalidUser)
+    .expect(400)
+    .expect('Content-Type', /application\/json/);
+
+  expect(response.text).toContain('Password has to be more than 3 characters');
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
