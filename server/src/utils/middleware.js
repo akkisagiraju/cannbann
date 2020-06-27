@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const logger = require('./logger');
+const { getErrorCode, getErrorMessage } = require('./helper');
 
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method);
@@ -26,26 +27,6 @@ const tokenExtractor = (request, response, next) => {
   }
 
   return response.status(401).send({ error: 'Token is not supplied' });
-};
-
-const getErrorMessage = (error) => {
-  switch (error.name) {
-    case 'CastError':
-      return 'Malformatted ID';
-    case 'ValidationError':
-      return error.message;
-    case 'JsonWebTokenError':
-      return 'Invalid token';
-    default:
-      return 'Error occurred';
-  }
-};
-
-const getErrorCode = (error) => {
-  if (error.name === 'JsonWebTokenError') {
-    return 401;
-  }
-  return 400;
 };
 
 const errorHandler = (error, request, response, next) => {
