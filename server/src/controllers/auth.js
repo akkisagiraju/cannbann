@@ -3,16 +3,14 @@
 
 const authRouter = require('express').Router();
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 require('express-async-errors');
+const { generatePasswordHash, generateUserToken } = require('../utils/helper');
 const User = require('../models/User');
 
 authRouter.post('/signup', async (request, response) => {
   const { name, email, password } = request.body;
 
-  const SALT_ROUNDS = 10;
-  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
-
+  const passwordHash = await generatePasswordHash(password);
   const user = new User({ name, email, passwordHash });
   await user.save();
 
@@ -22,7 +20,6 @@ authRouter.post('/signup', async (request, response) => {
 authRouter.post('/signin', async (request, response) => {
   const { email, password } = request.body;
 
-  // check if the user is in db using the email
   const user = await User.findOne({ email });
 
   const isPasswordCorret =
@@ -31,12 +28,8 @@ authRouter.post('/signin', async (request, response) => {
   if (!isPasswordCorret) {
     return response.status(401).json({ error: 'Invalid email or password' });
   }
-  const tokenObject = {
-    email: user.email,
-    id: user._id
-  };
 
-  const token = jwt.sign(tokenObject, process.env.SECRET_KEY);
+  const token = generateUserToken(user);
 
   return response
     .status(200)

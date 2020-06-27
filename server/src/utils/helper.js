@@ -1,3 +1,7 @@
+/* eslint-disable no-underscore-dangle */
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 const getErrorMessage = (error) => {
   switch (error.name) {
     case 'CastError':
@@ -18,7 +22,24 @@ const getErrorCode = (error) => {
   return 400;
 };
 
+const generatePasswordHash = async (password) => {
+  const SALT_ROUNDS = 10;
+  const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
+  return passwordHash;
+};
+
+const generateUserToken = (user) => {
+  const tokenObject = {
+    email: user.email,
+    id: user._id
+  };
+
+  return jwt.sign(tokenObject, process.env.SECRET_KEY);
+};
+
 module.exports = {
   getErrorMessage,
-  getErrorCode
+  getErrorCode,
+  generatePasswordHash,
+  generateUserToken
 };
