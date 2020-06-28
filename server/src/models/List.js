@@ -11,7 +11,13 @@ const listSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  cards: Array,
+  cards: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Card'
+    }
+  ],
+  createdBy: String,
   createdAt: String,
   updatedAt: String
 });

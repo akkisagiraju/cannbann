@@ -3,13 +3,19 @@
 const mongoose = require('mongoose');
 
 const boardSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true
   },
-  background: String,
-  orgId: String,
-  members: Array,
+  backgroundColor: String,
+  lists: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'List'
+    }
+  ],
+  teamId: String,
+  createdBy: String,
   createdAt: String,
   updatedAt: String
 });

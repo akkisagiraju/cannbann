@@ -14,7 +14,9 @@ const userSchema = new mongoose.Schema({
     unique: true
   },
   passwordHash: String,
-  org: String
+  teamId: String,
+  createdAt: String,
+  updatedAt: String
 });
 
 userSchema.plugin(uniqueValidator);
