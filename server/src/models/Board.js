@@ -15,7 +15,11 @@ const boardSchema = new mongoose.Schema({
     }
   ],
   teamId: String,
-  createdBy: String,
+  members: [{ id: String, name: String }],
+  createdBy: {
+    id: String,
+    name: String
+  },
   createdAt: String,
   updatedAt: String
 });
