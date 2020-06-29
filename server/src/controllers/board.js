@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken');
 const boardRouter = require('express').Router();
 const Board = require('../models/Board');
-const logger = require('../utils/logger');
 
 boardRouter.post('/boards', async (request, response) => {
   const { title, backgroundColor, teamId, members } = request.body;
@@ -44,6 +43,20 @@ boardRouter.delete('/boards/:id', async (request, response) => {
   const { id } = request.params;
   await Board.findByIdAndDelete(id);
   return response.status(200).send({ message: 'Board deleted successfully!' });
+});
+
+boardRouter.put('/boards/:id', async (request, response) => {
+  const { id } = request.params;
+  const keys = Object.keys(request.body);
+  const updatedBoard = {};
+  keys.forEach((key) => {
+    if (request.body[`${key}`]) {
+      updatedBoard[`${key}`] = request.body[`${key}`];
+    }
+  });
+
+  await Board.findByIdAndUpdate(id, updatedBoard, { useFindAndModify: false });
+  return response.status(200).send({ message: 'Board updated successfully!' });
 });
 
 module.exports = boardRouter;
