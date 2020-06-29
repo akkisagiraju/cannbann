@@ -32,7 +32,7 @@ const errorHandler = (error, request, response, next) => {
   logger.error(error.message);
   const errorCode = getErrorCode(error);
   const errorMessage = getErrorMessage(error);
-  response.status(errorCode).send({ error: errorMessage });
+  response.status(errorCode).send({ message: errorMessage });
 
   next(error);
 };
