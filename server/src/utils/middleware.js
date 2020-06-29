@@ -22,7 +22,7 @@ const tokenExtractor = (request, response, next) => {
       return response.status(401).send({ error: 'Invalid token' });
     }
     request.token = token;
-    next();
+    return next();
   }
 
   return response.status(401).send({ error: 'Token is not supplied' });
