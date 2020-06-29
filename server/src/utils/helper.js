@@ -35,8 +35,9 @@ const generatePasswordHash = async (password) => {
 
 const generateUserToken = (user) => {
   const tokenObject = {
-    email: user.email,
-    id: user._id
+    id: user._id,
+    name: user.name,
+    email: user.email
   };
 
   return jwt.sign(tokenObject, process.env.SECRET_KEY);
