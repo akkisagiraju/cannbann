@@ -12,7 +12,10 @@ const cardSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  createdBy: String,
+  createdBy: {
+    id: String,
+    name: String
+  },
   members: Array,
   createdAt: String,
   updatedAt: String

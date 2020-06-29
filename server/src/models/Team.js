@@ -7,7 +7,10 @@ const teamSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  createdBy: String,
+  createdBy: {
+    id: String,
+    name: String
+  },
   createdAt: String,
   updatedAt: String
 });
