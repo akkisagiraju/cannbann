@@ -1,4 +1,5 @@
 const listRouter = require('express').Router();
+require('express-async-errors');
 const jwt = require('jsonwebtoken');
 const List = require('../models/List');
 const Card = require('../models/Card');

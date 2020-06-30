@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('express-async-errors');
 const cardRouter = require('express').Router();
 const Card = require('../models/Card');
 const List = require('../models/List');
@@ -32,6 +33,13 @@ cardRouter.post('/cards', async (request, response) => {
 cardRouter.get('/cards', async (request, response) => {
   const cards = await Card.find({});
   return response.status(200).json(cards);
+});
+
+cardRouter.delete('/cards/:id', async (request, response) => {
+  const { id } = request.params;
+  await Card.findByIdAndDelete(id);
+  // this will also delete the card from its parent list - cool, innit?
+  return response.status(200).send({ message: 'Card deleted successfully!' });
 });
 
 module.exports = cardRouter;

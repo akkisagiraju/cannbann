@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken');
 const boardRouter = require('express').Router();
+require('express-async-errors');
+const jwt = require('jsonwebtoken');
 const Board = require('../models/Board');
 
 boardRouter.post('/boards', async (request, response) => {

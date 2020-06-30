@@ -1,5 +1,4 @@
 /* eslint-disable operator-linebreak */
-/* eslint-disable no-underscore-dangle */
 
 const authRouter = require('express').Router();
 const bcrypt = require('bcrypt');
