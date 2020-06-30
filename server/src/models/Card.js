@@ -16,7 +16,12 @@ const cardSchema = new mongoose.Schema({
     id: String,
     name: String
   },
-  members: Array,
+  members: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ],
   createdAt: String,
   updatedAt: String
 });
