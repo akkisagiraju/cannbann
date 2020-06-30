@@ -7,6 +7,8 @@ const config = require('./utils/config');
 const middleware = require('./utils/middleware');
 const authRouter = require('./controllers/auth');
 const boardRouter = require('./controllers/board');
+const listRouter = require('./controllers/list');
+const cardRouter = require('./controllers/card');
 
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
@@ -22,6 +24,8 @@ app.use('/auth', authRouter);
 app.use(middleware.tokenExtractor);
 
 app.use('/api', boardRouter);
+app.use('/api', listRouter);
+app.use('/api', cardRouter);
 
 app.use(middleware.errorHandler);
 
