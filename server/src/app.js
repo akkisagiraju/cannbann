@@ -9,6 +9,7 @@ const authRouter = require('./controllers/auth');
 const boardRouter = require('./controllers/board');
 const listRouter = require('./controllers/list');
 const cardRouter = require('./controllers/card');
+const teamRouter = require('./controllers/team');
 
 mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
@@ -26,6 +27,7 @@ app.use(middleware.tokenExtractor);
 app.use('/api', boardRouter);
 app.use('/api', listRouter);
 app.use('/api', cardRouter);
+app.use('/api', teamRouter);
 
 app.use(middleware.errorHandler);
 
