@@ -1,4 +1,4 @@
-const teamRouter = require('express').Router;
+const teamRouter = require('express').Router();
 require('express-async-errors');
 const jwt = require('jsonwebtoken');
 const Team = require('../models/Team');
