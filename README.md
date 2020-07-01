@@ -7,7 +7,7 @@
 - Express
 - MongoDB
 - Node (duh!)
-- Redis (as and when needed)
+- Redis (if needed)
 - Docker
 
 # To-do
