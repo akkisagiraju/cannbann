@@ -39,4 +39,21 @@ teamRouter.get('/teams/:id', async (request, response) => {
   return response.status(200).json(team);
 });
 
+teamRouter.put('/teams/:id', async (request, response) => {
+  const { id } = request.params;
+  const { name } = request.body;
+  const updatedTeam = {
+    name,
+    updatedAt: new Date().toISOString()
+  };
+  await Team.findByIdAndUpdate(id, updatedTeam, { useFindAndModify: false });
+  return response.status(200).send({ message: 'Team updated successfully!' });
+});
+
+teamRouter.delete('/teams/:id', async (request, response) => {
+  const { id } = request.params;
+  await Team.findByIdAndDelete(id);
+  return response.status(200).send({ message: 'Team deleted successfully!' });
+});
+
 module.exports = teamRouter;
