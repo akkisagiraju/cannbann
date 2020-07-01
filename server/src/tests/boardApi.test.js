@@ -26,6 +26,10 @@ beforeEach(async () => {
 });
 
 describe('where some boards are saved initially', () => {
+  test('returns 401 error if there is no Auth token', async (done) => {
+    await api.get('/api/boards').expect(401);
+    done();
+  });
   test('boards are returned as JSON', async (done) => {
     await api
       .get('/api/boards')
