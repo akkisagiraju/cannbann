@@ -40,16 +40,10 @@ boardRouter.get('/boards/:id', async (request, response) => {
   return response.status(200).json(board);
 });
 
-boardRouter.delete('/boards/:id', async (request, response) => {
-  const { id } = request.params;
-  await Board.findByIdAndDelete(id);
-  return response.status(200).send({ message: 'Board deleted successfully!' });
-});
-
 boardRouter.put('/boards/:id', async (request, response) => {
   const { id } = request.params;
   const keys = Object.keys(request.body);
-  const updatedBoard = {};
+  const updatedBoard = { updatedAt: new Date().toISOString };
   keys.forEach((key) => {
     if (request.body[`${key}`]) {
       updatedBoard[`${key}`] = request.body[`${key}`];
@@ -58,6 +52,12 @@ boardRouter.put('/boards/:id', async (request, response) => {
 
   await Board.findByIdAndUpdate(id, updatedBoard, { useFindAndModify: false });
   return response.status(200).send({ message: 'Board updated successfully!' });
+});
+
+boardRouter.delete('/boards/:id', async (request, response) => {
+  const { id } = request.params;
+  await Board.findByIdAndDelete(id);
+  return response.status(200).send({ message: 'Board deleted successfully!' });
 });
 
 module.exports = boardRouter;
