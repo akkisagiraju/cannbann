@@ -36,3 +36,7 @@ describe('where some boards are saved initially', () => {
     done();
   });
 });
+
+afterAll(() => {
+  mongoose.connection.close();
+});
