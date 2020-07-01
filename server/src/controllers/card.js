@@ -35,6 +35,30 @@ cardRouter.get('/cards', async (request, response) => {
   return response.status(200).json(cards);
 });
 
+cardRouter.get('/cards/:id', async (request, response) => {
+  const { id } = request.params;
+  const card = await Card.findById(id);
+  if (!card) {
+    return response
+      .status(400)
+      .send({ message: 'No card by the id is found.' });
+  }
+  return response.status(200).json(card);
+});
+
+cardRouter.put('/cards/:id', async (request, response) => {
+  const { id } = request.params;
+  const { title, desc } = request.body;
+  const updatedCard = {
+    title,
+    desc,
+    updatedAt: new Date().toISOString()
+  };
+
+  await Card.findByIdAndUpdate(id, updatedCard, { useFindAndModify: false });
+  return response.status(200).send({ message: 'Card updated successfully!' });
+});
+
 cardRouter.delete('/cards/:id', async (request, response) => {
   const { id } = request.params;
   await Card.findByIdAndDelete(id);
