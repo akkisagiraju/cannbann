@@ -31,6 +31,29 @@ listRouter.get('/lists', async (request, response) => {
   return response.status(200).json(lists);
 });
 
+listRouter.get('/lists/:id', async (request, response) => {
+  const { id } = request.params;
+  const list = await List.findById(id);
+  if (!list) {
+    return response
+      .status(400)
+      .send({ message: 'No list by the id is found.' });
+  }
+  return response.status(200).json(list);
+});
+
+listRouter.put('/lists/:id', async (request, response) => {
+  const { id } = request.params;
+  const { title } = request.body;
+  const updatedList = {
+    title,
+    updatedAt: new Date().toISOString()
+  };
+
+  await List.findByIdAndUpdate(id, updatedList, { useFindAndModify: false });
+  return response.status(200).send({ message: 'List updated successfully!' });
+});
+
 listRouter.delete('/lists/:id', async (request, response) => {
   const { id } = request.params;
 
