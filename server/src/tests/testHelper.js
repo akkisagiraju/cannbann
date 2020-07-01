@@ -11,9 +11,7 @@ const initialBoards = [
     createdBy: {
       id: '',
       name: ''
-    },
-    createdAt: '',
-    updatedAt: ''
+    }
   },
   {
     title: 'Test Board 2',
@@ -23,9 +21,7 @@ const initialBoards = [
     createdBy: {
       id: '',
       name: ''
-    },
-    createdAt: '',
-    updatedAt: ''
+    }
   }
 ];
 
