@@ -11,7 +11,7 @@ boardRouter.post('/boards', async (request, response) => {
   const boardItem = {
     title,
     backgroundColor: backgroundColor || 'blue',
-    teamId: teamId || '',
+    team: teamId || {},
     members: members || [],
     createdBy: { id: userId, name: userName },
     createdAt: new Date().toISOString(),

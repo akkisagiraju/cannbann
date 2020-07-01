@@ -14,7 +14,10 @@ const boardSchema = new mongoose.Schema({
       ref: 'List'
     }
   ],
-  teamId: String,
+  team: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team'
+  },
   members: [
     {
       type: mongoose.Schema.Types.ObjectId,
