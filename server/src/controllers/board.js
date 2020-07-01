@@ -4,14 +4,14 @@ const jwt = require('jsonwebtoken');
 const Board = require('../models/Board');
 
 boardRouter.post('/boards', async (request, response) => {
-  const { title, backgroundColor, teamId, members } = request.body;
+  const { title, backgroundColor, team, members } = request.body;
   const decodedToken = jwt.verify(request.token, process.env.SECRET_KEY);
   const { id: userId, name: userName } = decodedToken;
 
   const boardItem = {
     title,
     backgroundColor: backgroundColor || 'blue',
-    team: teamId || {},
+    team: team || {},
     members: members || [],
     createdBy: { id: userId, name: userName },
     createdAt: new Date().toISOString(),
