@@ -30,6 +30,7 @@ describe('where some boards are saved initially', () => {
     await api.get('/api/boards').expect(401);
     done();
   });
+
   test('boards are returned as JSON', async (done) => {
     await api
       .get('/api/boards')
@@ -38,6 +39,18 @@ describe('where some boards are saved initially', () => {
       .expect('Content-type', /application\/json/);
 
     done();
+  });
+});
+
+describe('when a new board is created', () => {
+  test('the number of boards in the db is incremented by one', async () => {
+    const boardsAtStart = await Board.find({});
+    const newBoard = new Board({
+      title: 'Random Board'
+    });
+    await newBoard.save();
+    const boardsAtEnd = await Board.find({});
+    expect(boardsAtEnd).toHaveLength(boardsAtStart.length + 1);
   });
 });
 
