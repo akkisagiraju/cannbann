@@ -4,13 +4,9 @@ const supertest = require('supertest');
 const app = require('../app');
 const User = require('../models/User');
 const { generatePasswordHash } = require('../utils/helper');
+const { usersInDb } = require('./testHelper');
 
 const api = supertest(app);
-
-const usersInDb = async () => {
-  const users = await User.find({});
-  return users.map((u) => u.toJSON());
-};
 
 beforeEach(async () => {
   await User.deleteMany({});
@@ -56,7 +52,7 @@ test('User creation is successful with a new user', async () => {
   expect(users).toContain(newUser.name);
 });
 
-test('Sign up fails if password is less than 3 characters', async () => {
+test('Sign up fails if password is less than 3 characters', async (done) => {
   const invalidUser = {
     name: 'Akhil',
     email: 'ak@me.com',
@@ -70,6 +66,7 @@ test('Sign up fails if password is less than 3 characters', async () => {
     .expect('Content-Type', /application\/json/);
 
   expect(response.text).toContain('Password has to be more than 3 characters');
+  done();
 });
 
 afterAll(() => {
