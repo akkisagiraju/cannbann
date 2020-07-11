@@ -1,44 +1,25 @@
+const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-const publicPath = path.resolve(__dirname, 'public');
-const buildPath = path.resolve(__dirname, 'build');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
-  entry: './src/index.tsx',
+  entry: ['react-hot-loader/patch', './src/index.tsx'],
   output: {
-    path: buildPath,
-    filename: 'main.js',
-    publicPath: '/'
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[contenthash].js'
   },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json']
-  },
-  devServer: {
-    contentBase: publicPath,
-    compress: true,
-    port: 3000,
-    hot: true,
-    publicPath: '/',
-    historyApiFallback: true
-  },
-  devtool: 'source-map',
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
-        exclude: /node_modules/,
-        loader: ['babel-loader', 'ts-loader']
+        test: /\.(js|jsx)$/,
+        use: 'babel-loader',
+        exclude: /node_modules/
       },
       {
-        enforce: 'pre',
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'source-map-loader'
-      },
-      {
-        test: /\.(s*)css$/,
-        loaders: ['style-loader', 'css-loader', 'sass-loader']
+        test: /\.ts(x)?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.(png|jp(e*)g|svg)$/,
@@ -46,24 +27,48 @@ const config = {
           {
             loader: 'url-loader',
             options: {
-              limit: 8192 // Convert images < 8kb to base64 strings
+              limit: 8192
             }
           }
         ]
       }
     ]
   },
-  optimization: {
-    usedExports: true
+  resolve: {
+    extensions: ['.js', '.jsx', '.tsx', '.ts'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    }
+  },
+  devServer: {
+    contentBase: './dist'
   },
   plugins: [
     new HtmlWebpackPlugin({
-      hash: false,
       template: './public/index.html',
-      chunks: ['app'],
       filename: 'index.html'
-    })
-  ]
+    }),
+    new CleanWebpackPlugin()
+  ],
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all'
+        }
+      }
+    }
+  }
 };
 
-module.exports = config;
+module.exports = (env, argv) => {
+  if (argv.hot) {
+    // Cannot use 'contenthash' when hot reloading is enabled.
+    config.output.filename = '[name].[hash].js';
+  }
+
+  return config;
+};
