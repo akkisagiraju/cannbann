@@ -18,6 +18,7 @@ mongoose.connect(config.MONGODB_URI, {
 });
 
 app.use(cors());
+app.use(middleware.requestLogger);
 app.use(express.json());
 
 app.use('/auth', authRouter);
