@@ -50,7 +50,7 @@ module.exports = {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-console': 0,
     'no-shadow': 0,
-    // "no-unused-vars": 0, // taking care of this in @typscript-eslint
+    'no-unused-vars': [1, { args: 'never' }],
     camelcase: 0
   },
   overrides: [
