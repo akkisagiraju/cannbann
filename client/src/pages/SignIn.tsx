@@ -1,10 +1,12 @@
 import React, { ChangeEvent } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import Container from '../styles/Container';
 import Button from '../styles/Button';
+import useAuth from '../hooks/useAuth';
 
 const Card = styled(Container)`
-  width: 360px;
+  width: 320px;
   flex-direction: column;
   background-color: #fff;
   border-radius: 3px;
@@ -25,6 +27,16 @@ const Input = styled.input`
 const SignIn: React.FC<{ signup: () => void }> = ({ signup }) => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
+  const { saveUser } = useAuth();
+
+  const signinHandler = async (): Promise<void> => {
+    try {
+      const response = await axios.post('/auth/signin', { email, password });
+      saveUser(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container style={{ height: '100vh' }}>
@@ -47,7 +59,7 @@ const SignIn: React.FC<{ signup: () => void }> = ({ signup }) => {
               setPassword(e.target.value)
             }
           />
-          <Button info bold>
+          <Button info bold onClick={signinHandler}>
             Sign in
           </Button>
         </Form>

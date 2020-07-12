@@ -6,7 +6,7 @@ import Button from '../styles/Button';
 import Loader from '../styles/Loader';
 
 const Card = styled(Container)`
-  width: 360px;
+  width: 320px;
   flex-direction: column;
   background-color: #fff;
   border-radius: 3px;
