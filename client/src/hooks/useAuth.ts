@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface UserObject {
+export interface UserObject {
   name: String;
   email: String;
   token: String;

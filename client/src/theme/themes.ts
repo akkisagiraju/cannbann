@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 
-
 export interface Palette {
   primaryColor: String;
   primaryBackground: String;
@@ -18,7 +17,7 @@ export interface Theme {
 export const lightTheme: Theme = {
   palette: {
     primaryColor: '#092042',
-    primaryBackground: '#0079BF'
+    primaryBackground: '#5AAC44'
   },
   typography: {
     fontSize: '14px'

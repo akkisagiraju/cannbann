@@ -3,16 +3,16 @@ import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
 
 const Auth: React.FC = () => {
-  const [auth, setAuth] = React.useState<string>('signin');
+  const [authView, setAuthView] = React.useState<string>('signin');
 
-  const signin = (): void => setAuth('signin');
-  const signup = (): void => setAuth('signup');
+  const switchToSignin = (): void => setAuthView('signin');
+  const switchToSignup = (): void => setAuthView('signup');
 
-  if (auth === 'signup') {
-    return <SignUp signin={signin} />;
+  if (authView === 'signup') {
+    return <SignUp switchToSignin={switchToSignin} />;
   }
 
-  return <SignIn signup={signup} />;
+  return <SignIn switchToSignup={switchToSignup} />;
 };
 
 export default Auth;

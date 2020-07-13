@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import axios from '../config/axios';
 import Container from '../styles/Container';
@@ -24,10 +24,14 @@ const Input = styled.input`
   margin-bottom: 16px;
 `;
 
-const SignUp: React.FC<{ signin: () => void }> = ({ signin }) => {
+const SignUp: React.FC<{ switchToSignin: () => void }> = ({
+  switchToSignin
+}) => {
   const [name, setName] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = React.useState<string>('');
 
   const resetForm = (): void => {
     setName('');
@@ -35,18 +39,32 @@ const SignUp: React.FC<{ signin: () => void }> = ({ signin }) => {
     setPassword('');
   };
 
+  const signupFail = (error: string): void => {
+    setIsLoading(false);
+    setErrorMessage(error);
+    resetForm();
+  };
+
+  const signupSuccess = (): void => {
+    setIsLoading(false);
+    setErrorMessage('');
+    resetForm();
+    // make the user sign in
+    switchToSignin();
+  };
+
   const signupHandler = async (): Promise<void> => {
+    setIsLoading(true);
     const user = {
       name,
       email,
       password
     };
     try {
-      const response = await axios.post('/auth/signup', user);
-      console.log(response);
+      await axios.post('/auth/signup', user);
+      signupSuccess();
     } catch (error) {
-      console.log(error.message);
-      resetForm();
+      signupFail(error.response.data.message);
     }
   };
 
@@ -59,7 +77,7 @@ const SignUp: React.FC<{ signin: () => void }> = ({ signin }) => {
             type="text"
             placeholder="Enter name"
             value={name}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value)
             }
           />
@@ -67,7 +85,7 @@ const SignUp: React.FC<{ signin: () => void }> = ({ signin }) => {
             type="email"
             placeholder="Enter email"
             value={email}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(e.target.value)
             }
           />
@@ -75,18 +93,25 @@ const SignUp: React.FC<{ signin: () => void }> = ({ signin }) => {
             type="password"
             placeholder="Enter password"
             value={password}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(e.target.value)
             }
           />
-          <Button info bold onClick={signupHandler}>
-            Sign up
-          </Button>
+          {!isLoading ? (
+            <Button bold onClick={signupHandler}>
+              Sign up
+            </Button>
+          ) : (
+            <Loader primary />
+          )}
         </Form>
-        <Button outline bold onClick={() => signin()}>
-          Already have an account? Sign in
-        </Button>
-        <Loader primary />
+        <div>
+          Already have an account?
+          <Button outline bold onClick={switchToSignin}>
+            Sign in
+          </Button>
+        </div>
+        <p style={{ color: '#B71C1C' }}>{errorMessage ? errorMessage : ''}</p>
       </Card>
     </Container>
   );
