@@ -9,9 +9,7 @@ const User = require('../models/User');
 authRouter.post('/signup', async (request, response) => {
   const { name, email, password } = request.body;
   if (password.length < 3) {
-    return response
-      .status(400)
-      .send({ error: 'Password has to be more than 3 characters' });
+    return response.status(400).send({ message: 'Password has to be more than 3 characters' });
   }
   const passwordHash = await generatePasswordHash(password);
   const user = new User({ name, email, passwordHash });
@@ -23,17 +21,14 @@ authRouter.post('/signup', async (request, response) => {
 authRouter.post('/signin', async (request, response) => {
   const { email, password } = request.body;
   const user = await User.findOne({ email });
-  const isPasswordCorret =
-    user === null ? false : await bcrypt.compare(password, user.passwordHash);
+  const isPasswordCorret = user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
   if (!isPasswordCorret) {
-    return response.status(401).json({ error: 'Invalid email or password' });
+    return response.status(401).json({ message: 'Invalid email or password' });
   }
   const token = generateUserToken(user);
 
-  return response
-    .status(200)
-    .send({ token, name: user.name, email: user.email });
+  return response.status(200).send({ token, name: user.name, email: user.email });
 });
 
 module.exports = authRouter;
