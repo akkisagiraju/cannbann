@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const Board = require('../models/Board');
 
 boardRouter.post('/boards', async (request, response) => {
-  const { title, backgroundColor, team, members } = request.body;
+  const { title, backgroundColor } = request.body;
   const decodedToken = jwt.verify(request.token, process.env.SECRET_KEY);
   const { id: userId, name: userName } = decodedToken;
 
@@ -12,7 +12,7 @@ boardRouter.post('/boards', async (request, response) => {
     title,
     backgroundColor: backgroundColor || 'blue',
     // team: team || {},
-    members: members || [],
+    // members: members || [],
     createdBy: { id: userId, name: userName },
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
