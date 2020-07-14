@@ -34,7 +34,7 @@ const useAuth = (): UseAuth => {
 
   const logout = (): void => {
     setUser({});
-    window.localStorage.setItem('user', '');
+    window.localStorage.removeItem('user');
   };
 
   return { user, saveUser, logout };

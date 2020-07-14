@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import axios from '../config/axios';
 import Container from '../styles/Container';
 import Button from '../styles/Button';
@@ -24,14 +25,14 @@ const Input = styled.input`
   margin-bottom: 16px;
 `;
 
-const SignUp: React.FC<{ switchToSignin: () => void }> = ({
-  switchToSignin
-}) => {
+const SignUp: React.FC = () => {
   const [name, setName] = React.useState<string>('');
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string>('');
+
+  const history = useHistory();
 
   const resetForm = (): void => {
     setName('');
@@ -50,7 +51,7 @@ const SignUp: React.FC<{ switchToSignin: () => void }> = ({
     setErrorMessage('');
     resetForm();
     // make the user sign in
-    switchToSignin();
+    history.push('/');
   };
 
   const signupHandler = async (): Promise<void> => {
@@ -107,7 +108,7 @@ const SignUp: React.FC<{ switchToSignin: () => void }> = ({
         </Form>
         <div>
           Already have an account?
-          <Button outline bold onClick={switchToSignin}>
+          <Button outline bold onClick={() => history.push('/')}>
             Sign in
           </Button>
         </div>

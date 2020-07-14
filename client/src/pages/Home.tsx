@@ -8,6 +8,11 @@ interface BoardProps {
   realboard?: boolean;
 }
 
+interface BoardObject {
+  id: string;
+  title: string;
+}
+
 const HomeContainer = styled(Container)`
   flex-direction: column;
 `;
@@ -32,11 +37,24 @@ const Board = styled(Container)`
 const Home: React.FC = () => {
   const [addingBoard, setAddingBoard] = React.useState<boolean>(false);
   const [boardName, setBoardName] = React.useState<string>('');
+  const [boards, setBoards] = React.useState<BoardObject[]>([]);
+
+  const getAllBoards = React.useCallback(async () => {
+    const response = await axios.get('/api/boards');
+    console.log(response.data);
+    setBoards(response.data);
+  }, []);
+
+  React.useEffect(() => {
+    getAllBoards();
+  }, [getAllBoards]);
 
   const createBoard = async () => {
     const response = await axios.post('/api/boards', { title: boardName });
     console.log(response);
     setAddingBoard(false);
+    setBoardName('');
+    getAllBoards();
   };
 
   return (
@@ -82,6 +100,9 @@ const Home: React.FC = () => {
             </div>
           </Board>
         ) : null}
+        {boards.map((b) => (
+          <Board key={b.id}>{b.title}</Board>
+        ))}
       </BoardsContainer>
     </HomeContainer>
   );

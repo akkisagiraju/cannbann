@@ -11,7 +11,7 @@ boardRouter.post('/boards', async (request, response) => {
   const boardItem = {
     title,
     backgroundColor: backgroundColor || 'blue',
-    team: team || {},
+    // team: team || {},
     members: members || [],
     createdBy: { id: userId, name: userName },
     createdAt: new Date().toISOString(),
@@ -33,9 +33,7 @@ boardRouter.get('/boards/:id', async (request, response) => {
   const { id } = request.params;
   const board = await Board.findById(id);
   if (!board) {
-    return response
-      .status(400)
-      .send({ message: 'No board by the id is found.' });
+    return response.status(400).send({ message: 'No board by the id is found.' });
   }
   return response.status(200).json(board);
 });
