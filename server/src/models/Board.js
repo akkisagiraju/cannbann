@@ -24,10 +24,7 @@ const boardSchema = new mongoose.Schema({
       ref: 'User'
     }
   ],
-  createdBy: {
-    id: String,
-    name: String
-  },
+  createdBy: String,
   createdAt: String,
   updatedAt: String
 });

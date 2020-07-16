@@ -25,7 +25,8 @@ boardRouter.post('/boards', async (request, response) => {
 });
 
 boardRouter.get('/boards', async (request, response) => {
-  const boards = await Board.find({});
+  const { id } = request.token;
+  const boards = await Board.find({ createdBy: id });
   return response.status(200).json(boards);
 });
 
