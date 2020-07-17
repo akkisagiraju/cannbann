@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 import { lightTheme } from '../theme/themes';
 import useAuth from '../hooks/useAuth';
 
@@ -24,8 +25,10 @@ const Link = styled.a`
 
 const Navbar: React.FC = () => {
   const { logout } = useAuth();
+  const history = useHistory();
 
   const logoutHandler = (): void => {
+    history.push('/');
     logout();
   };
 
