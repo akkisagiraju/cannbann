@@ -27,7 +27,8 @@ listRouter.post('/lists', async (request, response) => {
 });
 
 listRouter.get('/lists', async (request, response) => {
-  const lists = await List.find({}).populate({ path: 'cards', model: 'Card' });
+  const { boardId } = request.query;
+  const lists = await List.find({ boardId }).populate({ path: 'cards', model: 'Card' });
   return response.status(200).json(lists);
 });
 
@@ -35,9 +36,7 @@ listRouter.get('/lists/:id', async (request, response) => {
   const { id } = request.params;
   const list = await List.findById(id);
   if (!list) {
-    return response
-      .status(400)
-      .send({ message: 'No list by the id is found.' });
+    return response.status(400).send({ message: 'No list by the id is found.' });
   }
   return response.status(200).json(list);
 });

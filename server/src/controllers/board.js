@@ -6,14 +6,14 @@ const Board = require('../models/Board');
 boardRouter.post('/boards', async (request, response) => {
   const { title, backgroundColor } = request.body;
   const decodedToken = jwt.verify(request.token, process.env.SECRET_KEY);
-  const { id: userId, name: userName } = decodedToken;
+  const { id: userId } = decodedToken;
 
   const boardItem = {
     title,
     backgroundColor: backgroundColor || 'blue',
     // team: team || {},
     // members: members || [],
-    createdBy: { id: userId, name: userName },
+    createdBy: userId,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
   };
@@ -25,8 +25,11 @@ boardRouter.post('/boards', async (request, response) => {
 });
 
 boardRouter.get('/boards', async (request, response) => {
-  const { id } = request.token;
+  const decodedToken = jwt.verify(request.token, process.env.SECRET_KEY);
+  const { id } = decodedToken;
+  console.log(id);
   const boards = await Board.find({ createdBy: id });
+  console.log(boards);
   return response.status(200).json(boards);
 });
 

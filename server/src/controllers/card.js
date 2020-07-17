@@ -31,7 +31,8 @@ cardRouter.post('/cards', async (request, response) => {
 });
 
 cardRouter.get('/cards', async (request, response) => {
-  const cards = await Card.find({});
+  const { listId } = request.query;
+  const cards = await Card.find({ listId });
   return response.status(200).json(cards);
 });
 
@@ -39,9 +40,7 @@ cardRouter.get('/cards/:id', async (request, response) => {
   const { id } = request.params;
   const card = await Card.findById(id);
   if (!card) {
-    return response
-      .status(400)
-      .send({ message: 'No card by the id is found.' });
+    return response.status(400).send({ message: 'No card by the id is found.' });
   }
   return response.status(200).json(card);
 });
