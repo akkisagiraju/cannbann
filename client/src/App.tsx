@@ -1,19 +1,11 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import Auth from './routes/AuthRoutes';
-import Routes from './routes/AppRoutes';
-import useAuth from './hooks/useAuth';
+import Routes from './routes/Routes';
 
 const App = () => {
-  const { user } = useAuth();
-  console.log(user);
-
-  if (user.token) {
-    return <Routes />;
-  }
-  return <Auth />;
+  return <Routes />;
 };
 
-export default App;
+// export default App;
 
-// export default hot(App);
+export default hot(App);

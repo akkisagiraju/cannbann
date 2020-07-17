@@ -2,15 +2,17 @@ import React from 'react';
 import { Route, BrowserRouter, Redirect } from 'react-router-dom';
 import SignUp from '../pages/SignUp';
 import SignIn from '../pages/SignIn';
+import PrivateRoute from './PrivateRoute';
+import Home from '../pages/Home';
 
-const Auth: React.FC = () => {
+const Routes: React.FC = () => {
   return (
     <BrowserRouter>
       <Route path="/" exact component={SignIn} />
       <Route path="/signup" component={SignUp} />
-      <Redirect to="/" />
+      <PrivateRoute path="/home" component={Home} />
     </BrowserRouter>
   );
 };
 
-export default Auth;
+export default Routes;
