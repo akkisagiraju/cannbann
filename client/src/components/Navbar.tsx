@@ -5,8 +5,10 @@ import { lightTheme } from '../theme/themes';
 import useAuth from '../hooks/useAuth';
 
 const Nav = styled.div`
+  padding: 0 100px;
+  z-index: 5;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   background-color: ${(props) => props.theme.palette.primaryBackground};
   height: 60px;
