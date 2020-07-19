@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
+import { MdAddBox } from 'react-icons/md';
 import Container from '../styles/Container';
 import Button from '../styles/Button';
 import axios from '../config/axios';
 import useAuth from '../hooks/useAuth';
+import Grid from '../styles/Grid';
 
 interface BoardProps {
   realboard?: boolean;
+  justifySelf?: string;
 }
 
 interface BoardObject {
@@ -16,23 +19,30 @@ interface BoardObject {
 
 const HomeContainer = styled(Container)`
   flex-direction: column;
+  position: relative;
+  h1 {
+    margin: 0;
+  }
 `;
 
 const BoardsContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   width: 80%;
+  max-width: 1200px;
+  padding: 25px 75px;
+  box-sizing: border-box;
 `;
 
 const Board = styled(Container)`
   flex-direction: column;
   align-content: space-around;
-  height: 150px;
-  width: 250px;
-  background-color: #fff;
-  border: ${(props: BoardProps) =>
-    props.realboard ? 'none' : '2px solid #5AAC44'};
+  height: 200px;
+  width: 300px;
+  background-color: #c4c4c4;
   border-radius: 8px;
+  justify-self: ${(props: BoardProps) =>
+    props.justifySelf ? props.justifySelf : 'start'};
 `;
 
 const Home: React.FC = () => {
@@ -72,51 +82,32 @@ const Home: React.FC = () => {
   };
 
   return (
-    <HomeContainer>
-      <h1>Browse Boards</h1>
+    <HomeContainer className="main-container">
       <BoardsContainer>
-        <Board>
-          <Button bold outline onClick={() => setAddingBoard(true)}>
-            Add a new board
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}
+        >
+          <h1>Browse Boards</h1>
+          <Button
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}
+          >
+            <span>Add board</span>{' '}
+            <MdAddBox style={{ marginLeft: 4, height: 18, width: 18 }} />
           </Button>
-        </Board>
-        {addingBoard ? (
-          <Board>
-            <input
-              type="text"
-              value={boardName}
-              placeholder="Enter board name"
-              style={{
-                border: 'none',
-                textAlign: 'center',
-                fontFamily: 'inherit',
-                fontSize: 16,
-                padding: 8
-              }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setBoardName(e.target.value)
-              }
-            />
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                width: '60%',
-                marginTop: 16
-              }}
-            >
-              <Button bold outline onClick={() => setAddingBoard(false)}>
-                Cancel
-              </Button>
-              <Button bold onClick={createBoard}>
-                Create
-              </Button>
-            </div>
-          </Board>
-        ) : null}
-        {boards.map((b) => (
-          <Board key={b.id}>{b.title}</Board>
-        ))}
+        </div>
+        <Grid>
+          {boards.map((b, index) => (
+            <Board key={b.id}>{b.title}</Board>
+          ))}
+        </Grid>
       </BoardsContainer>
     </HomeContainer>
   );

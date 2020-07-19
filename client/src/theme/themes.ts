@@ -17,7 +17,7 @@ export interface Theme {
 export const lightTheme: Theme = {
   palette: {
     primaryColor: '#092042',
-    primaryBackground: '#5AAC44'
+    primaryBackground: '#2E42B0'
   },
   typography: {
     fontSize: '14px'

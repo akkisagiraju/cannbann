@@ -6,7 +6,7 @@ const Loader = styled.div<{ primary?: boolean }>`
   border-radius: 50%;
   border: 3px solid #ccc;
   border-top: ${(props) =>
-    props.primary ? '3px solid #5AAC44' : '3px solid #000'};
+    props.primary ? '3px solid #2E42B0' : '3px solid #000'};
   animation: spin 1s linear infinite;
 
   @keyframes spin {
