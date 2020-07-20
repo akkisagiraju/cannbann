@@ -6,6 +6,7 @@ import Button from '../styles/Button';
 import axios from '../config/axios';
 import useAuth from '../hooks/useAuth';
 import Grid from '../styles/Grid';
+import ModalContainer from '../components/Modal';
 
 interface BoardProps {
   realboard?: boolean;
@@ -49,6 +50,8 @@ const Home: React.FC = () => {
   const [addingBoard, setAddingBoard] = React.useState<boolean>(false);
   const [boardName, setBoardName] = React.useState<string>('');
   const [boards, setBoards] = React.useState<BoardObject[]>([]);
+  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+
   const { user } = useAuth();
 
   const getAllBoards = React.useCallback(async () => {
@@ -82,34 +85,41 @@ const Home: React.FC = () => {
   };
 
   return (
-    <HomeContainer className="main-container">
-      <BoardsContainer>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}
-        >
-          <h1>Browse Boards</h1>
-          <Button
+    <>
+      <div id="modal" />
+      <HomeContainer className="main-container">
+        <BoardsContainer>
+          <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center'
             }}
           >
-            <span>Add board</span>{' '}
-            <MdAddBox style={{ marginLeft: 4, height: 18, width: 18 }} />
-          </Button>
-        </div>
-        <Grid>
-          {boards.map((b, index) => (
-            <Board key={b.id}>{b.title}</Board>
-          ))}
-        </Grid>
-      </BoardsContainer>
-    </HomeContainer>
+            <h1>Browse Boards</h1>
+            <Button
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center'
+              }}
+              onClick={() => setIsModalOpen(true)}
+            >
+              <span>Add board</span>{' '}
+              <MdAddBox style={{ marginLeft: 4, height: 18, width: 18 }} />
+            </Button>
+          </div>
+          <Grid>
+            {boards.map((b, index) => (
+              <Board key={b.id}>{b.title}</Board>
+            ))}
+          </Grid>
+        </BoardsContainer>
+        {isModalOpen ? (
+          <ModalContainer setOpen={setIsModalOpen}>Hello</ModalContainer>
+        ) : null}
+      </HomeContainer>
+    </>
   );
 };
 
