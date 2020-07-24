@@ -10,9 +10,11 @@ const Modal = styled.div`
   left: calc(50vw - 0.4 * 400px);
   top: calc(30vh);
   margin: 0 auto;
+  border-radius: 4px;
   display: flex;
   flex-direction: column;
   z-index: 5;
+  box-shadow: 0px 9px 13px -8px rgba(0, 0, 0, 0.75);
 `;
 
 const ModalShadow = styled.div`
@@ -28,18 +30,23 @@ const ModalShadow = styled.div`
 const ModalContent = styled.div`
   overflow: auto;
   min-height: 200px;
-  padding: 0px 40px;
-  padding-bottom: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
 `;
 
-const ModalContainer: React.FC<{ setOpen: (arg: boolean) => void }> = ({
-  setOpen,
-  children
-}) => {
+const ModalContainer: React.FC<{
+  open: boolean;
+  setOpen: (arg: boolean) => void;
+}> = ({ open, setOpen, children }) => {
+  if (!open) {
+    return null;
+  }
   return ReactDOM.createPortal(
     <>
       <ModalShadow onClick={() => setOpen(false)} />
-      <Modal>
+      <Modal className="modal">
         <ModalContent>{children}</ModalContent>
       </Modal>
     </>,
