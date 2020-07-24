@@ -1,5 +1,5 @@
 {
-  "name": "trello-clone",
+  "name": "cannbann",
   "version": "1.0.0",
   "description": "- React (TypeScript) - React Router - Redux (or maybe not) - Styled Components - Express - MongoDB - Node (duh!) - Redis (if needed) - Docker",
   "main": "index.js",
@@ -8,12 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akkisagiraju/trello-clone.git"
+    "url": "git+https://github.com/akkisagiraju/canbann.git"
   },
   "author": "Akhil Sagiraju",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/akkisagiraju/trello-clone/issues"
-  },
-  "homepage": "https://github.com/akkisagiraju/trello-clone#readme"
+  "homepage": "https://github.com/akkisagiraju/canbann#readme"
 }
