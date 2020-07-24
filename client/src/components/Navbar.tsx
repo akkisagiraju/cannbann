@@ -13,6 +13,14 @@ const Nav = styled.div`
   background-color: ${(props) => props.theme.palette.primaryBackground};
   height: 60px;
   color: #fff;
+
+  @media (max-width: 768px) {
+    padding: 0px 40px;
+  }
+
+  @media (max-width: 450px) {
+    padding: 0px 30px;
+  }
 `;
 
 Nav.defaultProps = {
