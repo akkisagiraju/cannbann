@@ -28,7 +28,6 @@ const useAuth = (): UseAuth => {
   const saveUser = (userObject: UserObject): void => {
     setUser(userObject);
     const item = JSON.stringify(userObject);
-    console.log(item);
     window.localStorage.setItem('user', item);
   };
 

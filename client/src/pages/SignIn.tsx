@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import Container from '../styles/Container';
-import Button from '../styles/Button';
+import { Button, TextButton } from '../styles/Button';
 import useAuth, { UserObject } from '../hooks/useAuth';
 import Loader from '../styles/Loader';
 
@@ -92,11 +92,11 @@ const SignIn: React.FC = () => {
             <Loader primary />
           )}
         </Form>
-        <div>
+        <div style={{ marginTop: 12 }}>
           Don't have an account?
-          <Button outline bold onClick={() => history.push('/signup')}>
+          <TextButton onClick={() => history.push('/signup')}>
             Sign up
-          </Button>
+          </TextButton>
         </div>
         <p style={{ color: '#B71C1C' }}>{errorMessage ? errorMessage : ''}</p>
       </Card>

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import axios from '../config/axios';
 import Container from '../styles/Container';
-import Button from '../styles/Button';
+import { Button, TextButton } from '../styles/Button';
 import Loader from '../styles/Loader';
 
 const Card = styled(Container)`
@@ -106,11 +106,9 @@ const SignUp: React.FC = () => {
             <Loader primary />
           )}
         </Form>
-        <div>
+        <div style={{ marginTop: 12 }}>
           Already have an account?
-          <Button outline bold onClick={() => history.push('/')}>
-            Sign in
-          </Button>
+          <TextButton onClick={() => history.push('/')}>Sign in</TextButton>
         </div>
         <p style={{ color: '#B71C1C' }}>{errorMessage ? errorMessage : ''}</p>
       </Card>
