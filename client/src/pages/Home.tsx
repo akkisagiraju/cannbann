@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { MdAddBox } from 'react-icons/md';
-import Container from '../styles/Container';
+import { Container, HomeContainer, BoardsContainer } from '../styles/Container';
 import { Button, ButtonGroup } from '../styles/Button';
 import axios from '../config/axios';
 import useAuth from '../hooks/useAuth';
@@ -18,33 +18,6 @@ interface BoardObject {
   id: string;
   title: string;
 }
-
-const HomeContainer = styled(Container)`
-  flex-direction: column;
-  position: relative;
-  h1 {
-    margin: 0;
-  }
-`;
-
-const BoardsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  max-width: 1200px;
-  padding: 25px 75px;
-  box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    width: 100%;
-    padding: 25px 40px;
-  }
-
-  @media (max-width: 450px) {
-    width: 100%;
-    padding: 25px 30px;
-  }
-`;
 
 const Board = styled(Container)`
   flex-direction: column;

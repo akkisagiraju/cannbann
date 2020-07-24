@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import axios from '../config/axios';
-import Container from '../styles/Container';
+import { Container } from '../styles/Container';
 import { Button, TextButton } from '../styles/Button';
 import Loader from '../styles/Loader';
 

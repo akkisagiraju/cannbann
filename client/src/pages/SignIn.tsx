@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
-import Container from '../styles/Container';
+import { Container } from '../styles/Container';
 import { Button, TextButton } from '../styles/Button';
 import useAuth, { UserObject } from '../hooks/useAuth';
 import Loader from '../styles/Loader';

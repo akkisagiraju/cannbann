@@ -13,7 +13,7 @@ const Routes: React.FC = () => {
         <Route path="/" exact component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <PrivateRoute path="/home" component={Home} />
-        <PrivateRoute path="/board" component={Board} />
+        <PrivateRoute path="/board/:id" component={Board} />
       </Switch>
     </BrowserRouter>
   );
